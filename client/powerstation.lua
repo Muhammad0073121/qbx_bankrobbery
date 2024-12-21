@@ -26,7 +26,7 @@ RegisterNetEvent('thermite:StartFire', function(coords, maxChildren, isGasFire)
         }
         pos.z = pos.z - 0.9
         local fire = StartScriptFire(pos.x, pos.y, pos.z, maxChildren, isGasFire)
-        currentFires[#currentFires+1] = fire
+        currentFires[#currentFires + 1] = fire
     end
 end)
 
@@ -58,7 +58,8 @@ RegisterNetEvent('thermite:UseThermite', function()
                     exports.qbx_core:Notify(locale('error.fuses_already_blown'), 'error')
                 end
             else
-                exports.qbx_core:Notify(locale('error.minium_police_required', {police = config.minThermitePolice}), 'error')
+                exports.qbx_core:Notify(locale('error.minium_police_required', { police = config.minThermitePolice }),
+                    'error')
             end
         end
     elseif CurrentThermiteGate ~= 0 then
@@ -68,15 +69,17 @@ RegisterNetEvent('thermite:UseThermite', function()
         TriggerServerEvent('evidence:server:CreateFingerDrop', pos)
         if CurrentCops >= config.minThermitePolice then
             currentGate = CurrentThermiteGate
-            lib.playAnim(cache.ped, 'weapon@w_sp_jerrycan', 'fire', 3.0, 3.9, -1, 49, 0, false, false, false)
-            SetNuiFocus(true, true)
-            SendNUIMessage({
-                action = 'openThermite',
-                amount = math.random(5, 10),
-            })
-            TriggerServerEvent('qbx_bankrobbery:server:OpenGate', currentGate, false)
+            local success = lib.skillCheck({ 'easy', 'easy', 'easy' },
+                { 'w', 'a', 's', 'd' })
+            if success then
+                TriggerServerEvent('qbx_bankrobbery:server:OpenGate', currentGate, false)
+            else
+                local coords = GetEntityCoords(cache.ped)
+                createFire(coords, math.random(10000, 15000))
+            end
         else
-            exports.qbx_core:Notify(locale('error.minium_police_required', {police = config.minThermitePolice}), 'error')
+            exports.qbx_core:Notify(locale('error.minium_police_required', { police = config.minThermitePolice }),
+                'error')
         end
     end
 end)
@@ -109,7 +112,7 @@ RegisterNUICallback('thermitesuccess', function(_, cb)
         local time = 3
         local coords = GetEntityCoords(cache.ped)
         while time > 0 do
-            exports.qbx_core:Notify(locale('general.thermite_detonating_in_seconds', {time = time}))
+            exports.qbx_core:Notify(locale('general.thermite_detonating_in_seconds', { time = time }))
             Wait(1000)
             time -= 1
         end
@@ -135,7 +138,7 @@ end)
 CreateThread(function()
     for k = 1, #powerStationConfig do
         lib.zones.box({
-            name = 'powerstation_coords_'..k,
+            name = 'powerstation_coords_' .. k,
             coords = powerStationConfig[k].coords,
             size = vec3(1, 1, 2),
             rotation = 75.0,

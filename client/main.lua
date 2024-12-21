@@ -66,25 +66,26 @@ function OpenLocker(bankId, lockerId) -- Globally Used
             -- loadAnimDict('anim@heists@fleeca_bank@drilling')
             -- TaskPlayAnim(cache.ped, 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle', 3.0, 3.0, -1, 1, 0, false, false, false)
             local drillObject = CreateObject(`hei_prop_heist_drill`, pos.x, pos.y, pos.z, true, true, true)
-            AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+            AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0,
+                180.0, true, true, false, true, 1, true)
             isDrilling = true
             if lib.progressBar({
-                duration = 20000,
-                label = locale('general.breaking_open_safe'),
-                canCancel = true,
-                useWhileDead = false,
-                disable = {
-                    move = true,
-                    car = true,
-                    mouse = false,
-                    combat = true
-                },
-                anim = {
-                    dict = 'anim@heists@fleeca_bank@drilling',
-                    clip = 'drill_straight_idle',
-                    flag = 1
-                }
-            }) then
+                    duration = 20000,
+                    label = locale('general.breaking_open_safe'),
+                    canCancel = true,
+                    useWhileDead = false,
+                    disable = {
+                        move = true,
+                        car = true,
+                        mouse = false,
+                        combat = true
+                    },
+                    anim = {
+                        dict = 'anim@heists@fleeca_bank@drilling',
+                        clip = 'drill_straight_idle',
+                        flag = 1
+                    }
+                }) then
                 DetachEntity(drillObject, true, true)
                 DeleteObject(drillObject)
                 TriggerServerEvent('qbx_bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
@@ -111,25 +112,26 @@ function OpenLocker(bankId, lockerId) -- Globally Used
         local hasItem = exports.ox_inventory:Search('count', 'drill') > 0
         if hasItem then
             local drillObject = CreateObject(`hei_prop_heist_drill`, pos.x, pos.y, pos.z, true, true, true)
-            AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+            AttachEntityToEntity(drillObject, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0, -0.01, 90.0, -90.0,
+                180.0, true, true, false, true, 1, true)
             isDrilling = true
             if lib.progressBar({
-                duration = 20000,
-                label = locale('general.breaking_open_safe'),
-                canCancel = true,
-                useWhileDead = false,
-                disable = {
-                    move = true,
-                    car = true,
-                    mouse = false,
-                    combat = true
-                },
-                anim = {
-                    dict = 'anim@heists@fleeca_bank@drilling',
-                    clip = 'drill_straight_idle',
-                    flag = 1
-                }
-            }) then
+                    duration = 20000,
+                    label = locale('general.breaking_open_safe'),
+                    canCancel = true,
+                    useWhileDead = false,
+                    disable = {
+                        move = true,
+                        car = true,
+                        mouse = false,
+                        combat = true
+                    },
+                    anim = {
+                        dict = 'anim@heists@fleeca_bank@drilling',
+                        clip = 'drill_straight_idle',
+                        flag = 1
+                    }
+                }) then
                 DetachEntity(drillObject, true, true)
                 DeleteObject(drillObject)
 
@@ -156,22 +158,22 @@ function OpenLocker(bankId, lockerId) -- Globally Used
     else
         isDrilling = true
         if lib.progressBar({
-            duration = 20000,
-            label = locale('general.breaking_open_safe'),
-            canCancel = true,
-            useWhileDead = false,
-            disable = {
-                move = true,
-                car = true,
-                mouse = false,
-                combat = true
-            },
-            anim = {
-                dict = 'anim@gangops@facility@servers@',
-                clip = 'hotwire',
-                flag = 1
-            }
-        }) then
+                duration = 20000,
+                label = locale('general.breaking_open_safe'),
+                canCancel = true,
+                useWhileDead = false,
+                disable = {
+                    move = true,
+                    car = true,
+                    mouse = false,
+                    combat = true
+                },
+                anim = {
+                    dict = 'anim@gangops@facility@servers@',
+                    clip = 'hotwire',
+                    flag = 1
+                }
+            }) then
             TriggerServerEvent('qbx_bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
             TriggerServerEvent('qbx_bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
             TriggerServerEvent('qbx_bankrobbery:server:recieveItem', 'small', bankId, lockerId)
@@ -199,45 +201,55 @@ RegisterNetEvent('qbx_bankrobbery:client:robberyCall', function(type, coords)
     if not isLoggedIn or QBX.PlayerData.job.type ~= 'leo' or not QBX.PlayerData.job.onduty then return end
     if type == 'small' then
         PlaySound(-1, 'Lose_1st', 'GTAO_FM_Events_Soundset', false, 0, true)
-        TriggerServerEvent('police:server:policeAlert', locale('general.fleeca_robbery_alert'))
+        -- TriggerServerEvent('police:server:policeAlert', locale('general.fleeca_robbery_alert'))
     elseif type == 'paleto' then
         PlaySound(-1, 'Lose_1st', 'GTAO_FM_Events_Soundset', false, 0, true)
         Wait(100)
-        PlaySoundFrontend( -1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
+        PlaySoundFrontend(-1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
         Wait(100)
         PlaySound(-1, 'Lose_1st', 'GTAO_FM_Events_Soundset', false, 0, true)
         Wait(100)
-        PlaySoundFrontend( -1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
-        TriggerServerEvent('police:server:policeAlert', locale('general.paleto_robbery_alert'))
+        PlaySoundFrontend(-1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
+        -- TriggerServerEvent('police:server:policeAlert', locale('general.paleto_robbery_alert'))
     elseif type == 'pacific' then
         PlaySound(-1, 'Lose_1st', 'GTAO_FM_Events_Soundset', false, 0, true)
         Wait(100)
-        PlaySoundFrontend( -1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
+        PlaySoundFrontend(-1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
         Wait(100)
         PlaySound(-1, 'Lose_1st', 'GTAO_FM_Events_Soundset', false, 0, true)
         Wait(100)
-        PlaySoundFrontend( -1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
-        TriggerServerEvent('police:server:policeAlert', locale('general.pacific_robbery_alert'))
+        PlaySoundFrontend(-1, 'Beep_Red', 'DLC_HEIST_HACKING_SNAKE_SOUNDS', true)
+        -- TriggerServerEvent('police:server:policeAlert', locale('general.pacific_robbery_alert'))
     end
-    local transG = 250
-    local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipSprite(blip, 487)
-    SetBlipColour(blip, 4)
-    SetBlipDisplay(blip, 4)
-    SetBlipAlpha(blip, transG)
-    SetBlipScale(blip, 1.2)
-    SetBlipFlashes(blip, true)
-    BeginTextCommandSetBlipName('STRING')
-    AddTextComponentString(locale('general.bank_robbery_police_call'))
-    EndTextCommandSetBlipName(blip)
-    while transG ~= 0 do
-        Wait(180 * 4)
-        transG = transG - 1
-        SetBlipAlpha(blip, transG)
-        if transG == 0 then
-            SetBlipSprite(blip, 2)
-            RemoveBlip(blip)
-            return
-        end
+    -- local transG = 250
+    -- local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+    -- SetBlipSprite(blip, 487)
+    -- SetBlipColour(blip, 4)
+    -- SetBlipDisplay(blip, 4)
+    -- SetBlipAlpha(blip, transG)
+    -- SetBlipScale(blip, 1.2)
+    -- SetBlipFlashes(blip, true)
+    -- BeginTextCommandSetBlipName('STRING')
+    -- AddTextComponentString(locale('general.bank_robbery_police_call'))
+    -- EndTextCommandSetBlipName(blip)
+    -- while transG ~= 0 do
+    --     Wait(180 * 4)
+    --     transG = transG - 1
+    --     SetBlipAlpha(blip, transG)
+    --     if transG == 0 then
+    --         SetBlipSprite(blip, 2)
+    --         RemoveBlip(blip)
+    --         return
+    --     end
+    -- end
+end)
+
+RegisterNetEvent('qbx_bankrobbery:client:dispatch', function(type)
+    if type == 'small' then
+        exports['ps-dispatch']:FleecaBankRobbery("66")
+    elseif type == 'paleto' then
+        exports['ps-dispatch']:PaletoBankRobbery("67")
+    elseif type == 'pacific' then
+        exports['ps-dispatch']:PacificBankRobbery("68")
     end
 end)
